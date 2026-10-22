@@ -1,7 +1,7 @@
 pkgbase = linux-salkim
 	pkgdesc = Linux Salkim kernel with AMDGPU and ntsync IOCP improvements
 	pkgver = 7.3
-	pkgrel = 1
+	pkgrel = 3
 	url = https://www.kernel.org/
 	arch = x86_64
 	license = GPL-2.0-only
@@ -64,6 +64,7 @@ pkgbase = linux-salkim
 	source = local-0003-amdgpu-batch-pending-vm-updates.patch
 	source = local-0004-amdgpu-send-hdmi-vrr-metadata-in-vtem-slot.patch
 	source = local-0005-amdgpu-batch-sparse-va-operations.patch
+	source = local-0006-amdgpu-share-sparse-bo-update-batches.patch
 	source = https://raw.githubusercontent.com/cachyos/kernel-patches/master/7.3/misc/dkms-clang.patch
 	b2sums = b7fb8c74de664fdd0cd7b42afff2720bda5c4bdb2ffffa80a745c5fecd029c6fe739a3ecbdaa5c5e27194a8acb9bf861271e7bafe6eb475bb3ccd6862e4caf60
 	b2sums = 49574923722de09cdd10150a11893cbd085573e52bbd043bdf07219756f807274507f3c8d787cae889efa97db4fc4ca21d8598d13821c9f76728da473ecb4ef2
@@ -99,6 +100,7 @@ pkgbase = linux-salkim
 	b2sums = 73c48813f4a35a42c6334956003090b8ae3b579a322613c63473ef7bf3ce7f2068bfd539eb9aa54e8d41638b3669a28b3354f32f1cf0fbf6662fb79a536d702d
 	b2sums = 9f1a1fd64389f8beab6a964c928e6ac7e319b2b53b2c1f318d61f1ce5b2720f857a10e8ad01186412c782068d18f9edc8a6e512745d731c8c1178be7e79420ae
 	b2sums = f23f51ce12b0289d3ca04fe778050d673ba2cda71db01ef69dcd8517ee36771e5467ec8d97933aa5474d4ea907a92096f1e477228866206e09ed851777bdd724
+	b2sums = 866ca64b6bcf56600c705a6b9b70c1b9c4fbc4aa7dcf3dad2412fd6562145be84f2aa8c17482a0130c0a58dd1d04fb70b02221ec1fae2e92dffe9eca6c3c51c7
 	b2sums = c992567bd7dd8553432be496ffa1c17e2f5ebe9c7edb51945cf977e1b742dd6517c210d8843bb82744ca705efd07f8027cd7dde41b50215ebd707a34aa81462e
 
 pkgname = linux-salkim
