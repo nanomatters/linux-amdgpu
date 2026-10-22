@@ -1,0 +1,53 @@
+Subject: [PATCH] drm/amdgpu: Grow delayed VM update IBs on rollover
+
+Grow full delayed-update IBs up to the existing limit. Preserve immediate
+allocation sizes and allocation error handling.
+---
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index cca19a21b35..001b8d2aa7f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -38,9 +38,10 @@ static int amdgpu_vm_sdma_map_table(struct amdgpu_bo_vm *table)
+ 	return amdgpu_ttm_alloc_gart(&table->bo.tbo);
+ }
+ 
+-/* Allocate a new job for @count PTE updates */
++/* Allocate a job for @count PTE updates, growing to @min_dw when possible. */
+ static int amdgpu_vm_sdma_alloc_job(struct amdgpu_vm_update_params *p,
+-				    unsigned int count, u64 k_job_id)
++				    unsigned int count, unsigned int min_dw,
++				    u64 k_job_id)
+ {
+ 	enum amdgpu_ib_pool_type pool = p->immediate ? AMDGPU_IB_POOL_IMMEDIATE
+ 		: AMDGPU_IB_POOL_DELAYED;
+@@ -53,6 +54,8 @@ static int amdgpu_vm_sdma_alloc_job(struct amdgpu_vm_update_params *p,
+ 	ndw = AMDGPU_VM_SDMA_MIN_NUM_DW;
+ 	if (p->pages_addr)
+ 		ndw += count * 2;
++	if (!p->immediate)
++		ndw = max(ndw, min_dw);
+ 	ndw = min(ndw, AMDGPU_VM_SDMA_MAX_NUM_DW);
+ 
+ 	r = amdgpu_job_alloc_with_ib(p->adev, entity, AMDGPU_FENCE_OWNER_VM,
+@@ -79,7 +82,7 @@ static int amdgpu_vm_sdma_prepare(struct amdgpu_vm_update_params *p,
+ {
+ 	int r;
+ 
+-	r = amdgpu_vm_sdma_alloc_job(p, 0, k_job_id);
++	r = amdgpu_vm_sdma_alloc_job(p, 0, 0, k_job_id);
+ 	if (r)
+ 		return r;
+ 
+@@ -249,10 +252,11 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 
+ 		if (ndw < 32) {
+ 			struct amdgpu_vm_update_params next = *p;
++			unsigned int size_dw = drm_suballoc_size(p->job->ibs->sa_bo) / 4;
+ 			unsigned long index;
+ 
+ 			/* Keep the current job available for error-path completion. */
+-			r = amdgpu_vm_sdma_alloc_job(&next, count,
++			r = amdgpu_vm_sdma_alloc_job(&next, count, size_dw * 2,
+ 						     AMDGPU_KERNEL_JOB_ID_VM_UPDATE);
+ 			if (r)
+ 				return r;
