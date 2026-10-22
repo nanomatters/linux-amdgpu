@@ -288,6 +288,7 @@ source+=("local-0003-amdgpu-batch-pending-vm-updates.patch")
 source+=("local-0004-amdgpu-send-hdmi-vrr-metadata-in-vtem-slot.patch")
 source+=("local-0005-amdgpu-batch-sparse-va-operations.patch")
 source+=("local-0006-amdgpu-share-sparse-bo-update-batches.patch")
+source+=("local-0007-amdgpu-share-prt-update-batches.patch")
 
 # LLVM makedepends
 if _is_lto_kernel; then
@@ -923,4 +924,5 @@ b2sums=('b7fb8c74de664fdd0cd7b42afff2720bda5c4bdb2ffffa80a745c5fecd029c6fe739a3e
         '9f1a1fd64389f8beab6a964c928e6ac7e319b2b53b2c1f318d61f1ce5b2720f857a10e8ad01186412c782068d18f9edc8a6e512745d731c8c1178be7e79420ae'
         'f23f51ce12b0289d3ca04fe778050d673ba2cda71db01ef69dcd8517ee36771e5467ec8d97933aa5474d4ea907a92096f1e477228866206e09ed851777bdd724'
         '866ca64b6bcf56600c705a6b9b70c1b9c4fbc4aa7dcf3dad2412fd6562145be84f2aa8c17482a0130c0a58dd1d04fb70b02221ec1fae2e92dffe9eca6c3c51c7'
+        'ec9ba2952d3c1572563e7bf4d5f9949f421d2e8bd41aff2dbf849add8a6e8ec7a4a1e1df173c7d50d3dae31c6b04f34fa26ea437fbf7b623ef6cb30ec138ba21'
         'c992567bd7dd8553432be496ffa1c17e2f5ebe9c7edb51945cf977e1b742dd6517c210d8843bb82744ca705efd07f8027cd7dde41b50215ebd707a34aa81462e')
