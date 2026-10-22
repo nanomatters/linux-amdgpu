@@ -177,7 +177,7 @@ fi
 pkgbase="linux-$_pkgsuffix"
 _major=7.3
 pkgver=7.3
-pkgrel=3
+pkgrel=4
 _srcname=linux-${pkgver}
 pkgdesc='Linux Salkim kernel with AMDGPU and ntsync IOCP improvements'
 _kernver="$pkgver-$pkgrel"
@@ -290,6 +290,8 @@ source+=("local-0005-amdgpu-batch-sparse-va-operations.patch")
 source+=("local-0006-amdgpu-share-sparse-bo-update-batches.patch")
 source+=("local-0007-amdgpu-share-prt-update-batches.patch")
 source+=("local-0008-amdgpu-grow-sdma-update-buffers.patch")
+source+=("local-0009-amdgpu-scope-batch-retirements.patch")
+source+=("local-0010-amdgpu-honor-completed-sparse-dependencies.patch")
 
 # LLVM makedepends
 if _is_lto_kernel; then
@@ -927,4 +929,6 @@ b2sums=('b7fb8c74de664fdd0cd7b42afff2720bda5c4bdb2ffffa80a745c5fecd029c6fe739a3e
         '866ca64b6bcf56600c705a6b9b70c1b9c4fbc4aa7dcf3dad2412fd6562145be84f2aa8c17482a0130c0a58dd1d04fb70b02221ec1fae2e92dffe9eca6c3c51c7'
         'ec9ba2952d3c1572563e7bf4d5f9949f421d2e8bd41aff2dbf849add8a6e8ec7a4a1e1df173c7d50d3dae31c6b04f34fa26ea437fbf7b623ef6cb30ec138ba21'
         '13f430458c1d4a4d9115a634e30e4ab76c9e89accbba7b48f572b3c5d3d8319ae6c09b077e66d22f20327cb06fb70d3e7e1ff639314c8ac0828d6c1bba49885f'
+        '234be9e9ebaffaff048700784667edd08ce19476a589e27f406e1f69a7bc06bbb267caaeef741bfdabfbee191ba28c6c89e584ffc84a60352d6c628cb6624ff4'
+        'a498f9456ff7922ac5fa9a7dd0007f1e35e29cbab86484e02ab560af6d0efc82b000d798e757ef3ba7ee351177c52cadd4bd1bda67788913c636dc3b6aa6ca44'
         'c992567bd7dd8553432be496ffa1c17e2f5ebe9c7edb51945cf977e1b742dd6517c210d8843bb82744ca705efd07f8027cd7dde41b50215ebd707a34aa81462e')
