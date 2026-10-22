@@ -176,15 +176,13 @@ fi
 
 pkgbase="linux-$_pkgsuffix"
 _major=7.3
-_rcver=rc7
-_amdgpu_tag=amd-drm-fixes-7.3-2026-10-15
-pkgver=${_major}.${_rcver}
-pkgrel=2
-_srcname=kernel-${_amdgpu_tag}
+pkgver=7.3
+pkgrel=1
+_srcname=linux-${pkgver}
 pkgdesc='Linux Salkim kernel with AMDGPU and ntsync IOCP improvements'
 _kernver="$pkgver-$pkgrel"
 arch=('x86_64')
-url="https://gitlab.freedesktop.org/drm/amdgpu/kernel"
+url="https://www.kernel.org/"
 license=('GPL-2.0-only')
 options=('!strip' '!debug' '!lto')
 makedepends=(
@@ -210,11 +208,12 @@ makedepends=(
 )
 
 _patchsource="https://raw.githubusercontent.com/cachyos/kernel-patches/master/${_major}"
+_amdgpu_url="https://gitlab.freedesktop.org/drm/amdgpu/kernel"
 _nv_ver=615.78.08
 _nv_pkg="NVIDIA-Linux-x86_64-${_nv_ver}"
 _nv_open_pkg="NVIDIA-kernel-module-source-${_nv_ver}"
 source=(
-    "${url}/-/archive/${_amdgpu_tag}/${_srcname}.tar.gz"
+    "https://cdn.kernel.org/pub/linux/kernel/v${_major%%.*}.x/${_srcname}.tar.xz"
     "config"
 )
 
@@ -225,7 +224,7 @@ _amdgpu_backports=(
     22763a52e0894f7e31b8acc7047e0cb3f70d9eba
 )
 for _i in "${!_amdgpu_backports[@]}"; do
-    source+=("$(printf '%02d' $((_i + 1)))-${_amdgpu_backports[_i]:0:12}.patch::${url}/-/commit/${_amdgpu_backports[_i]}.patch")
+    source+=("$(printf '%02d' $((_i + 1)))-${_amdgpu_backports[_i]:0:12}.patch::${_amdgpu_url}/-/commit/${_amdgpu_backports[_i]}.patch")
 done
 unset _i
 
@@ -254,7 +253,7 @@ _amdgpu_next_fixes_backports=(
     bebad45050945a3d668d6701fb77ae2571c5d44b
 )
 for _commit in "${_amdgpu_next_fixes_backports[@]}"; do
-    source+=("${_commit}.patch::${url}/-/commit/${_commit}.patch")
+    source+=("${_commit}.patch::${_amdgpu_url}/-/commit/${_commit}.patch")
 done
 unset _commit
 
@@ -271,7 +270,7 @@ for _commit in "${_amdgpu_hdmi_backports[@]}"; do
 done
 unset _commit
 
-source+=("5fd3b60d9b80bfe8b880336b5486309c69cf3865.patch::${url}/-/commit/5fd3b60d9b80bfe8b880336b5486309c69cf3865.patch")
+source+=("5fd3b60d9b80bfe8b880336b5486309c69cf3865.patch::${_amdgpu_url}/-/commit/5fd3b60d9b80bfe8b880336b5486309c69cf3865.patch")
 
 _cachyos_hdmi_backports=(
     6f11071b4a1a305d42e61fb7d943c703cbdbd6fb
@@ -887,7 +886,7 @@ for _p in "${pkgname[@]}"; do
     }"
 done
 
-b2sums=('0e43da5c8a2f89e8cb7892dddb7ac37970e28563c8809a18bc59a7f176c83adc8ef1ead6e3ad9f179efe1cec16586d11198bc38c69caf08363efa71207207359'
+b2sums=('b7fb8c74de664fdd0cd7b42afff2720bda5c4bdb2ffffa80a745c5fecd029c6fe739a3ecbdaa5c5e27194a8acb9bf861271e7bafe6eb475bb3ccd6862e4caf60'
         '49574923722de09cdd10150a11893cbd085573e52bbd043bdf07219756f807274507f3c8d787cae889efa97db4fc4ca21d8598d13821c9f76728da473ecb4ef2'
         '9bdd1ee3f745c340371ff4389a6971871f298112dedb9c93c9af303bb7fa18acd3abd530837a4ceaa9b2f5784617423bcbd9da86883e5ae66e81aeeceac4614b'
         '83bd876837ed77ff939478700beb2060e0d679bec1ce44b97ee22f768cd7b4c3afde2f2d35d390e6ecd54f1ff241465acb1861b01a3919170778c5884409a1ab'
